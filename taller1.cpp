@@ -39,7 +39,7 @@ void ingresarAutorALibro(Libreria &libreria, int codigo, string nombre, string n
 void registrarPedido(Libreria &libreria, int codigo, int cantidad);
 bool venderLibro(Libreria &libreria, int codigo, int cantidad);
 
-//
+// Punto de entrada
 int main(){
 
     Libreria biblioteca = {{}, 0};
@@ -60,53 +60,61 @@ int main(){
         cin >> opcion;
 
         switch (opcion) {
+
+            //Opcion 1, Ingresar Libros
             case 1:{
                 string titulo, editorial;
                 int exMin, exAct, codigo;
                 float precio;
-                cout << "Ingrese el codigo del libro";
+                cout << "Ingrese el codigo del libro: ";
                 cin >> codigo;
                 cin.ignore();
-                cout << "Ingrese el titulo del libro";
+                cout << "Ingrese el titulo del libro: ";
                 getline(cin, titulo);
-                cout << "Ingrese la editorial del libro";
+                cout << "Ingrese la editorial del libro: ";
                 getline(cin, editorial);
-                cout << "Ingrese la existencia minima del libro";
+                cout << "Ingrese la existencia minima del libro: ";
                 cin >> exMin;
-                cout << "Ingrese la existencia actual del libro";
+                cout << "Ingrese la existencia actual del libro: ";
                 cin >> exAct;
-                cout << "Ingrese el precio del libro";
+                cout << "Ingrese el precio del libro: ";
                 cin >> precio;
                 ingresarLibro(biblioteca, codigo, titulo, editorial, exMin, exAct, precio);
                 break;
             }
+
+            //Opcion 2, Ingresar Autor a un libro
             case 2:{
                 string nombre, nacionalidad;
                 int codigo;
-                cout << "Ingrese el codigo del libro";
+                cout << "Ingrese el codigo del libro: ";
                 cin >> codigo;
                 cin.ignore();
-                cout << "Ingrese el nombre del autor";
+                cout << "Ingrese el nombre del autor: ";
                 getline(cin, nombre);
-                cout << "Ingrese la nacionalidad del autor";
+                cout << "Ingrese la nacionalidad del autor: ";
                 getline(cin, nacionalidad);
                 ingresarAutorALibro(biblioteca, codigo, nombre, nacionalidad);
                 break;
             }
+
+            //Opcion 3, Registrar un pedido de libros
             case 3:{
                 int codigo, cantidad;
-                cout << "Ingrese el codigo del libro";
+                cout << "Ingrese el codigo del libro: ";
                 cin >> codigo;
-                cout << "Ingrese la cantidad de libros a vender";
+                cout << "Ingrese la cantidad de libros a vender: ";
                 cin >> cantidad;
                 registrarPedido(biblioteca, codigo, cantidad);
                 break;
             }
+
+            //Opcion 4, Vender libros
             case 4:{
                 int codigo, cantidad;
-                cout << "Ingrese el codigo del libro";
+                cout << "Ingrese el codigo del libro: ";
                 cin >> codigo;
-                cout << "Ingrese la cantidad de libros a vender";
+                cout << "Ingrese la cantidad de libros a vender: ";
                 cin >> cantidad;
                 bool vendido = venderLibro(biblioteca, codigo, cantidad);
                 if (vendido) {
@@ -114,34 +122,45 @@ int main(){
                 }
                 break;
             }
+
+            //Opcion 5, Consultar existencias de un libro
             case 5:{
                 int codigo;
-                cout << "Ingrese el codigo del libro";
+                cout << "Ingrese el codigo del libro: ";
                 cin >> codigo;
                 consultarExistencia(biblioteca, codigo);
                 break;
             }
+
+            //Opcion 6, Consultar autores de un libro en especifico
             case 6:{
                 int codigo;
-                cout << "Ingrese el codigo del libro";
+                cout << "Ingrese el codigo del libro: ";
                 cin >> codigo;
                 consultarAutores(biblioteca, codigo);
                 break;
             }
+
+            //Opcion 7, Mostrar todos los libros de la libreria
             case 7:{
                 mostrarLibros(biblioteca);
                 break;
             }
+
+            //Opcion 8, Consultar informacion de un libro en especifico
             case 8:{
                 int codigo;
-                cout << "Ingrese el codigo del libro";
+                cout << "Ingrese el codigo del libro: ";
                 cin >> codigo;
                 consultarInfo(biblioteca, codigo);
                 break;
             }
+            //Opcion 9, Salir del programa
             case 9:
                 cout << "Saliendo...\n";
                 break;
+
+            //Default, informar al usuario de una opcion invalida
             default:
                 cout << "Opcion invalida.\n";
                 break;
@@ -150,6 +169,12 @@ int main(){
     }while (opcion != 9);
 }
 
+/*
+*
+*
+*
+*
+* */
 void ingresarLibro(Libreria &libreria, int codigo, string titulo, string editorial, int existenciaMinima, int existenciaActual, float precio) {
     if (libreria.numLibros >= MAX_LIBROS) {
         cout << "No hay espacio para mas libros." << endl;
@@ -177,23 +202,25 @@ void ingresarLibro(Libreria &libreria, int codigo, string titulo, string editori
     libreria.libros[i].numAutores = 0;
  
     libreria.numLibros++;
+    return;
 }
 
 void mostrarLibros (Libreria &libreria) {
-	cout << "\n----Libreria Javeriana----" << endl;
-	for (int i = 0; i < libreria.numLibros; i++) {
-		cout << "----- " << libreria.libros[i].titulo <<" -----" <<endl;
-		cout << "Codigo --> " << libreria.libros[i].codigo << endl;
+    cout << "\n----Libreria Javeriana----" << endl;
+    for (int i = 0; i < libreria.numLibros; i++) {
+        cout << "----- " << libreria.libros[i].titulo <<" -----" <<endl;
+        cout << "Codigo: " << libreria.libros[i].codigo << endl;
         for (int j = 0; j < libreria.libros[i].numAutores; j++){
-		    cout << "Autor --> " << libreria.libros[i].autores[j].nombre << endl;
-            cout << "Nacionalidad --> " << libreria.libros[i].autores[j].nacionalidad << endl;
+            cout << "Autor: " << libreria.libros[i].autores[j].nombre << endl;
+            cout << "Nacionalidad: " << libreria.libros[i].autores[j].nacionalidad << endl;
         }
-		cout << "Editorial --> " << libreria.libros[i].editorial << endl;
-		cout << "Existencia Minima --> " << libreria.libros[i].existenciaMinima << endl;
-		cout << "Existencia Actual --> " << libreria.libros[i].existenciaActual << endl;
-		cout << "Precio --> " << libreria.libros[i].precio << endl;
-		cout << "------------------------------------------" <<endl;
-	}
+        cout << "Editorial: " << libreria.libros[i].editorial << endl;
+        cout << "Existencia Minima: " << libreria.libros[i].existenciaMinima << endl;
+        cout << "Existencia Actual: " << libreria.libros[i].existenciaActual << endl;
+        cout << "Precio: " << libreria.libros[i].precio << endl;
+        cout << "------------------------------------------" <<endl;
+    }
+    return;
 }
 
 void consultarInfo(Libreria &libreria, int codTemporalInfo) {
@@ -201,15 +228,15 @@ void consultarInfo(Libreria &libreria, int codTemporalInfo) {
         if (codTemporalInfo == libreria.libros[i].codigo) {
             cout << "----Libreria bibliotenca----" << endl;
             cout << "----- " << libreria.libros[i].titulo << " -----" << endl;
-            cout << "Codigo --> " << libreria.libros[i].codigo << endl;
+            cout << "Codigo: " << libreria.libros[i].codigo << endl;
             for (int j = 0; j < libreria.libros[i].numAutores; j++) {
-                cout << "Autor --> " << libreria.libros[i].autores[j].nombre << endl;
-                cout << "Nacionalidad --> " << libreria.libros[i].autores[j].nacionalidad << endl;
+                cout << "Autor: " << libreria.libros[i].autores[j].nombre << endl;
+                cout << "Nacionalidad: " << libreria.libros[i].autores[j].nacionalidad << endl;
             }
-            cout << "Editorial --> " << libreria.libros[i].editorial << endl;
-            cout << "Existencia Minima --> " << libreria.libros[i].existenciaMinima << endl;
-            cout << "Existencia Actual --> " << libreria.libros[i].existenciaActual << endl;
-            cout << "Precio --> " << libreria.libros[i].precio << endl;
+            cout << "Editorial: " << libreria.libros[i].editorial << endl;
+            cout << "Existencia Minima: " << libreria.libros[i].existenciaMinima << endl;
+            cout << "Existencia Actual: " << libreria.libros[i].existenciaActual << endl;
+            cout << "Precio: " << libreria.libros[i].precio << endl;
             cout << "------------------------------------------" << endl;
             return;
         }
@@ -221,8 +248,8 @@ void consultarExistencia (Libreria &libreria, int codTemporalEx){
     for (int i = 0; i < libreria.numLibros; i++) {
         if (codTemporalEx == libreria.libros[i].codigo){
         cout << "----Libreria Javeriana----" << endl;
-        cout << "Existencia Minima --> " << libreria.libros[i].existenciaMinima << endl;
-		cout << "Existencia Actual --> " << libreria.libros[i].existenciaActual << endl;
+        cout << "Existencia Minima: " << libreria.libros[i].existenciaMinima << endl;
+        cout << "Existencia Actual: " << libreria.libros[i].existenciaActual << endl;
         cout << "------------------------------------------" <<endl;
         return;
          }
@@ -236,8 +263,8 @@ void consultarAutores(Libreria &libreria, int codTemporalAut) {
             cout << "----Libreria Javeriana----" << endl;
             cout << "----- " << libreria.libros[i].titulo << " -----" << endl;
             for (int j = 0; j < libreria.libros[i].numAutores; j++) {
-                cout << "Autor --> " << libreria.libros[i].autores[j].nombre << endl;
-                cout << "Nacionalidad --> " << libreria.libros[i].autores[j].nacionalidad << endl;
+                cout << "Autor: " << libreria.libros[i].autores[j].nombre << endl;
+                cout << "Nacionalidad: " << libreria.libros[i].autores[j].nacionalidad << endl;
          }
             return;
        }
@@ -264,7 +291,7 @@ void ingresarAutorALibro(Libreria &libreria, int codigo, string nombre, string n
 }
  
 void registrarPedido(Libreria &libreria, int codigo, int cantidad) {
-    
+
     if (cantidad <= 0) {
         cout << "La cantidad debe ser un numero mayor que 0" << endl;
         return;
@@ -279,7 +306,7 @@ void registrarPedido(Libreria &libreria, int codigo, int cantidad) {
     }
     cout << "No se encontro un libro con ese codigo." << endl;
 }
- 
+
 bool venderLibro(Libreria &libreria, int codigo, int cantidad) {
 
     if(cantidad <= 0){
@@ -300,5 +327,3 @@ bool venderLibro(Libreria &libreria, int codigo, int cantidad) {
     cout << "No se encontro un libro con ese codigo." << endl;
     return false;
 }
- 
-
