@@ -177,6 +177,7 @@ void ingresarLibro(Libreria &libreria, int codigo, string titulo, string editori
     libreria.libros[i].numAutores = 0;
  
     libreria.numLibros++;
+	return;
 }
 
 void mostrarLibros (Libreria &libreria) {
@@ -193,6 +194,7 @@ void mostrarLibros (Libreria &libreria) {
 		cout << "Existencia Actual --> " << libreria.libros[i].existenciaActual << endl;
 		cout << "Precio --> " << libreria.libros[i].precio << endl;
 		cout << "------------------------------------------" <<endl;
+		return;
 	}
 }
 
