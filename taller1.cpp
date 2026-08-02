@@ -169,12 +169,22 @@ int main(){
     }while (opcion != 9);
 }
 
+
+//Declaracion de la funcion para ingresar un libro a la libreria
 /*
-*
-*
-*
-*
-* */
+
+libreria: estructura Libreria donde se va a ingresar el libro
+codigo: codigo unico que identifica al libro
+titulo: titulo del libro
+editorial: editorial que publico el libro
+existenciaMinima: cantidad minima de existencias a las que debe mantenerse del libro
+existenciaActual: cantidad actual de existencias del libro
+precio: precio de venta del libro
+
+Esta funcion agrega un nuevo libro al arreglo de libros de la libreria, validando
+que haya espacio disponible, que el codigo no este repetido y que la existencia
+y el precio no sean negativos. El libro se ingresa inicialmente sin autores.
+*/
 void ingresarLibro(Libreria &libreria, int codigo, string titulo, string editorial, int existenciaMinima, int existenciaActual, float precio) {
     if (libreria.numLibros >= MAX_LIBROS) {
         cout << "No hay espacio para mas libros." << endl;
@@ -205,6 +215,15 @@ void ingresarLibro(Libreria &libreria, int codigo, string titulo, string editori
     return;
 }
 
+//Declaracion de la funcion para mostrar todos los libros de la libreria
+/*
+
+libreria: estructura Libreria que contiene el arreglo de libros a mostrar
+
+Esta funcion recorre todos los libros registrados en la libreria y muestra por
+pantalla su informacion completa: codigo, autores con su nacionalidad, editorial,
+existencia minima, existencia actual y precio.
+*/
 void mostrarLibros (Libreria &libreria) {
     cout << "\n----Libreria Javeriana----" << endl;
     for (int i = 0; i < libreria.numLibros; i++) {
@@ -223,6 +242,17 @@ void mostrarLibros (Libreria &libreria) {
     return;
 }
 
+//Declaracion de la funcion para consultar la informacion completa de un libro
+/*
+
+libreria: estructura Libreria donde se realiza la busqueda
+codTemporalInfo: codigo del libro que se desea consultar
+
+Funcion que busca un libro por su codigo dentro del arreglo de libros y, si lo
+encuentra, muestra toda su informacion: titulo, codigo, autores con su
+nacionalidad, editorial, existencia minima, existencia actual y precio. Si no
+encuentra un libro con ese codigo, informa al usuario.
+*/
 void consultarInfo(Libreria &libreria, int codTemporalInfo) {
     for (int i = 0; i < libreria.numLibros; i++) {
         if (codTemporalInfo == libreria.libros[i].codigo) {
@@ -244,6 +274,17 @@ void consultarInfo(Libreria &libreria, int codTemporalInfo) {
     cout << "No se encontro un libro con ese codigo" << endl;
 }
 
+
+//Declaracion de la funcion para consultar la existencia de un libro
+/*
+
+libreria: estructura Libreria donde se realiza la busqueda
+codTemporalEx: codigo del libro cuya existencia se desea consultar
+
+Busca un libro por su codigo y, si lo encuentra, muestra su
+existencia minima y su existencia actual. Si no encuentra un libro con ese
+codigo, informa al usuario.
+*/
 void consultarExistencia (Libreria &libreria, int codTemporalEx){
     for (int i = 0; i < libreria.numLibros; i++) {
         if (codTemporalEx == libreria.libros[i].codigo){
@@ -257,6 +298,16 @@ void consultarExistencia (Libreria &libreria, int codTemporalEx){
     cout << "No se encontro un libro con ese codigo" << endl;
 }
 
+//Declaracion de la funcion para consultar los autores de un libro
+/*
+
+libreria: estructura Libreria donde se realiza la busqueda
+codTemporalAut: codigo del libro cuyos autores se desean consultar
+
+Esta funcion busca un libro por su codigo y, si lo encuentra, muestra el titulo
+del libro junto con el nombre y la nacionalidad de cada uno de sus autores. Si
+no encuentra un libro con ese codigo, informa al usuario.
+*/
 void consultarAutores(Libreria &libreria, int codTemporalAut) {
     for (int i = 0; i < libreria.numLibros; i++) {
         if (codTemporalAut == libreria.libros[i].codigo) {
@@ -272,6 +323,18 @@ void consultarAutores(Libreria &libreria, int codTemporalAut) {
     cout << "No se encontro un libro con ese codigo." << endl;
 }
 
+//Declaracion de la funcion para ingresar un autor a un libro existente
+/*
+
+libreria: estructura Libreria donde se realiza la busqueda
+codigo: codigo del libro al cual se le va a agregar el autor
+nombre: nombre completo del autor a agregar
+nacionalidad: nacionalidad del autor a agregar
+
+Funcion que busca un libro por su codigo y, si lo encuentra, agrega un nuevo
+autor a su arreglo de autores, validando primero que haya espacio disponible.
+Si no encuentra un libro con ese codigo, informa al usuario.
+*/
 void ingresarAutorALibro(Libreria &libreria, int codigo, string nombre, string nacionalidad) {
     for (int i = 0; i < libreria.numLibros; i++) {
         if (codigo == libreria.libros[i].codigo) {
@@ -290,6 +353,17 @@ void ingresarAutorALibro(Libreria &libreria, int codigo, string nombre, string n
     cout << "No se encontro un libro con ese codigo." << endl;
 }
  
+//Declaracion de la funcion para registrar el pedido de un libro
+/*
+
+libreria: estructura Libreria donde se realiza la busqueda
+codigo: codigo del libro al cual se le va a registrar el pedido
+cantidad: cantidad de ejemplares que llegaron en el pedido
+
+Funcion que busca un libro por su codigo y, si lo encuentra, aumenta su
+existencia actual en la cantidad indicada, validando primero que la cantidad
+sea mayor que cero. Si no encuentra un libro con ese codigo, informa al usuario.
+*/
 void registrarPedido(Libreria &libreria, int codigo, int cantidad) {
 
     if (cantidad <= 0) {
@@ -307,6 +381,19 @@ void registrarPedido(Libreria &libreria, int codigo, int cantidad) {
     cout << "No se encontro un libro con ese codigo." << endl;
 }
 
+//Declaracion de la funcion para vender una cantidad de un libro
+/*
+
+libreria: estructura Libreria donde se realiza la busqueda
+codigo: codigo del libro que se desea vender
+cantidad: cantidad de ejemplares a vender
+
+Funcion que busca un libro por su codigo y, si lo encuentra, disminuye su
+existencia actual en la cantidad indicada, validando que la cantidad sea mayor
+que cero y que haya suficiente existencia disponible. Retorna true si la venta
+se realizo con exito y false si la cantidad es invalida, si no hay suficientes
+existencias o si no se encuentra un libro con ese codigo.
+*/
 bool venderLibro(Libreria &libreria, int codigo, int cantidad) {
 
     if(cantidad <= 0){
